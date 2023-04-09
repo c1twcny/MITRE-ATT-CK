@@ -92,7 +92,8 @@ new_technique_full_lst = [item1 for sublist in technique_full_lst for item1 in s
 #print(len(new_mitigation_full_lst), type(new_mitigation_full_lst))
 #print(len(new_technique_full_lst), type(new_technique_full_lst))
 
-# Create a Pandas DataFrame by combining new_mitigation_full_lst & new_technique_full_lst
+# Create a Pandas DataFrtmp_df.to_csv("C:/Users/c1twc/OneDrive/Documents/GitHub/MITRE-ATT-CK/mitigation-technique.csv", sep=',', index=False)ame by combining new_mitigation_full_lst & new_technique_full_lst
 tmp_df = pd.DataFrame(list(zip(new_mitigation_full_lst, new_te
 
-#print(tmp_df)
+# convert & output Pandas DataFrame to a CSV file
+tmp_df.to_csv("C:/Users/c1twc/OneDrive/Documents/GitHub/MITRE-ATT-CK/mitigation-technique.csv", sep=',', index=False)
