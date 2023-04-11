@@ -1,4 +1,4 @@
-//Prod-v1.2: (Mitigation)-(Tactic)-(Technique)-(Actor)-(DataSource) graph
+//Prod-v1.4: (Mitigation)-(Tactic)-(Technique)-(Actor)-(DataSource) graph
 //Lesson: Use 'UNION' for the best performance
 // 
 // Author: Ta-Wei
@@ -31,6 +31,11 @@ MERGE (:DataSource {id:datasource.id, name:datasource.name, description:datasour
 
 UNION
 
+LOAD CSV WITH HEADERS FROM 'file:///country.csv' AS country
+MERGE (:Country {id:country.id, country:country.country, region:country.region})
+
+UNION
+
 LOAD CSV WITH HEADERS FROM 'file:///tt_edge.csv' AS tt_edges
 MATCH (s:Tactics {id:tt_edges.tactic})
 MATCH (d:Technique {id:tt_edges.technique})
@@ -56,3 +61,9 @@ LOAD CSV WITH HEADERS FROM 'file:///dt_edge.csv' AS dt_edge
 MATCH (s3:DataSource {id:dt_edge.data_source})
 MATCH (d3:Technique {id:dt_edge.technique})
 MERGE (s3)-[:DETECT]->(d3)
+
+UNION
+
+MATCH (s4:Country), (d4:Actor)
+WHERE s4.country = d4.country
+MERGE (s4)-[:ESTABLISH]->(d4) 
