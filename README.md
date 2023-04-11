@@ -17,4 +17,4 @@ Edge files:
 3. gt_edge.csv: (Actor)-(Technique)
 4. dt_edge.csv: (DataSource)-(Technique)
 
-/python folder contains several files that perform web scraping on MITRE website (work-in-progress) 
+/python folder contains several files that perform data scraping on MITRE website (work-in-progress) 
