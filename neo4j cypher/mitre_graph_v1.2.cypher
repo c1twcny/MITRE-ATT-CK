@@ -1,6 +1,11 @@
 //Prod-v1.2: (Mitigation)-(Tactic)-(Technique)-(Actor)-(DataSource) graph
 //Lesson: Use 'UNION' for the best performance
-//
+// 
+// Author: Ta-Wei
+// Date: March 2023
+// Purpose:
+// Build a MITRE ATT&CK framwork graph to test some GDS functions
+// 
 LOAD CSV WITH HEADERS FROM 'file:///threatTactic.csv' AS tactics
 MERGE (:Tactics {id:tactics.id, name:tactics.name, description:tactics.description})
 
