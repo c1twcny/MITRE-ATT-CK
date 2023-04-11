@@ -2,7 +2,10 @@
 //Lesson: Use 'UNION' for the best performance
 // 
 // Author: Ta-Wei
-// Date: March 2023
+// Creation Date: March 2023
+// Update Date: 4/11/2023
+// Version: 1.4
+//
 // Purpose:
 // Build a MITRE ATT&CK framwork graph to test some GDS functions
 // 
