@@ -1,3 +1,15 @@
+# ---------------------------------------------------------------------------------------------------------------
+#
+# Author: Ta-Wei
+# Date: March 2023
+# Version:
+#
+# Purpose:
+# (1) Extract actor group info from MITRE
+# (2) Build the edge file for (Group) and (Technique)
+#
+# ----------------------------------------------------------------------------------------------------------------
+
 import requests
 from bs4 import BeautifulSoup
 
@@ -80,18 +92,12 @@ for i in range(len(key_lst)):
     tmp_technique_lst = group_technique[key_lst[i]]
     technique_full_lst.append(tmp_technique_lst)
 
-
-#tmp_test = []
-#tmp_test.extend(repeat(key_lst[1], len(mitigation_technique[key_lst[1]])))
 new_group_full_lst = [item0 for sublist in group_full_lst for item0 in sublist]
 new_technique_full_lst = [item1 for sublist in technique_full_lst for item1 in sublist]
-#print(len(new_mitigation_full_lst), type(new_mitigation_full_lst))
-#print(len(new_technique_full_lst), type(new_technique_full_lst))
+
 
 # Create a Pandas DataFrame by combining new_mitigation_full_lst & new_technique_full_lst
 tmp_df = pd.DataFrame(list(zip(new_group_full_lst, new_technique_full_lst)), columns=['group','technique'])
-#print(tmp_df)
-type(tmp_df)
+
 
 tmp_df.to_csv("C:/Users/c1twc/OneDrive/Documents/GitHub/MITRE-ATT-CK/group-technique.csv", sep=',', index=False)
-
