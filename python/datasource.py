@@ -8,6 +8,7 @@
 # (1) Scrap Datasource info from MITRE
 # (2) Build the (DataSource)-(Technique) edge file
 # 
+# --------------------------------------------------------------------------------------------------------
 import requests
 from bs4 import BeautifulSoup
 
