@@ -14,6 +14,10 @@ dbms.security.procedures.allowlist=gds.*
 > CALL gds.graph.exists('mitre_graph') --> check if 'mitre_graph' exists.
 > CALL gds.graph.drop('mitre_graph') --> drop 'mitre_graph' from the catalog.
 >
+4.1 Graph project creation:
+> CALL gds.graph.project('mitreGraph', ['Actor','Country','DataSource','Mitigation','Tactic','Technique'], ['CONTAIN','DEPLOY','DETECT','ESTABLISH','MITIGATE'])
+
+
 
 5. GDS test run:
 5.1 Centraliy - PageRank
@@ -45,3 +49,32 @@ dbms.security.procedures.allowlist=gds.*
 > YIELD nodeId, score
 > RETURN gds.util.asNode(nodeId).name AS actor_name, score
 > ORDER BY score DESC, actor_name ASC
+
+6. GDS - Community Detection
+6.1 Louvain, Label Propagation, WCC, Modularity Optimization, SCC, kmeans...
+> CALL gds.louvain.stream('mitreGraph') 
+> YIELD nodeId, communityId, intermediateCommunityIds
+> RETURN gds.util.asNode(nodeId).name AS name, communityId, intermediateCommunityIds
+> ORDER BY communityId DESC;
+
+> CALL gds.labelPropagation.stream('mitreGraph')
+> YIELD nodeId, communityId
+> RETURN gds.util.asNode(nodeId).name AS name, communityId
+> ORDER BY communityId DESC;
+
+> CALL gds.wcc.stream('mitreGraph')
+> YIELD nodeId, componentId
+> RETURN gds.util.asNode(nodeId).name AS name, componentId;
+
+> CALL gds.beta.modularityOptimization.stream('mitreGraph')
+> YIELD nodeId, communityId
+> RETURN gds.util.asNode(nodeId).name AS name, communityId
+> ORDER BY communityId DESC;
+
+> CALL gds.alpha.scc.write('mitreGraph')
+> YIELD preProcessingMillis, computeMillis, writeMillis, setCount, maxSetSize, minSetSize;
+
+>//CALL gds.beta.kmeans.stream('mitreGraph',{nodeProperty:'id', k:3, randomSeed:42})
+>//YIELD nodeId, communityId, distanceFromCentroid
+>//RETURN gds.util.asNode(nodeId).name AS name, communityId, distanceFromCentroid
+>//ORDER BY communityId, name ASC
