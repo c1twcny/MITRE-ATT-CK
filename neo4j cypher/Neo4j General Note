@@ -1,0 +1,47 @@
+ON Neo4j GDS
+1. Add the following entries to the neo4j.conf file, then restart Neo4j:
+dbms.security.procedures.unrestricted=gds.*
+dbms.security.procedures.allowlist=gds.*
+2. Verify installation by running the followings:
+> RETURN gds.version()
+> CALL gds.list()
+3. To run any GDS algorithm, you MUST first project a name graph to run on. For example:
+> CALL gds.graph.project('mitre_graph',['Actor','Country','DataSource','Mitigation','Tactics','Technique'],['CONTAIN','DEPLOY','DETECT','ESTABLISH','MITIGATE'])
+> YIELD graphName AS graph, nodeProjection, nodeCount AS nodes, relationshipProjection, relationshipCount AS rels
+
+4. Som useful commands:
+> CALL gds.graph.list --> show a list of named graphs and their properties.
+> CALL gds.graph.exists('mitre_graph') --> check if 'mitre_graph' exists.
+> CALL gds.graph.drop('mitre_graph') --> drop 'mitre_graph' from the catalog.
+>
+
+5. GDS test run:
+5.1 Centraliy - PageRank
+> CALL gds.pageRank.stream('mitre_graph',{maxIterations:30})
+> YIELD nodeId, score
+> RETURN gds.util.asNode(nodeId).name AS name, score
+> ORDER BY score DESC, name ASC
+
+5.2 Centrality - Degree Centrality
+> CALL gds.degree.stream('mitre_graph')
+> YIELD nodeId, score
+> RETURN gds.util.asNode(nodeId).name AS actor_name, score
+> ORDER BY score DESC, actor_name ASC
+
+5.3 Centrality - Betweeness Centrality
+> CALL gds.betweenness.stream('mitre_graph')
+> YIELD nodeId, score
+> RETURN gds.util.asNode(nodeId).name AS actor_name, score
+> ORDER BY score DESC, actor_name ASC
+
+5.4 Centrality - Closeness Centrality
+> CALL gds.beta.closeness.stream('mitre_graph')
+> YIELD nodeId, score
+> RETURN gds.util.asNode(nodeId).name AS actor_name, score
+> ORDER BY score DESC, actor_name ASC
+
+5.5 Centrality - Eigenvecor Centrality
+> CALL gds.eigenvector.stream('mitre_graph', {maxIterations:30})
+> YIELD nodeId, score
+> RETURN gds.util.asNode(nodeId).name AS actor_name, score
+> ORDER BY score DESC, actor_name ASC
