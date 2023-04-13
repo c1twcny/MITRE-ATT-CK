@@ -16,7 +16,7 @@ dbms.security.procedures.allowlist=gds.*
 >
 4.1 Graph project creation:
 > CALL gds.graph.project('mitreGraph', ['Actor','Country','DataSource','Mitigation','Tactic','Technique'], ['CONTAIN','DEPLOY','DETECT','ESTABLISH','MITIGATE'])
-
+Note: Currently Neo4j doesn't support graph.project creation if the value of a property is a String; it only support int and float value type. 
 
 
 5. GDS test run:
@@ -78,3 +78,10 @@ dbms.security.procedures.allowlist=gds.*
 >//YIELD nodeId, communityId, distanceFromCentroid
 >//RETURN gds.util.asNode(nodeId).name AS name, communityId, distanceFromCentroid
 >//ORDER BY communityId, name ASC
+
+
+7. Similarity
+> CALL gds.nodeSimilarity.stream('mitreGraph')
+> YIELD node1, node2, similarity
+> RETURN gds.util.asNode(node1).name AS name1, gds.util.asNode(node2).name AS name2, similarity
+> ORDER BY similarity DESC
